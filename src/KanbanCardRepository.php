@@ -1,6 +1,6 @@
 <?php
 
-namespace WPROG2\FinalProject\public;
+namespace WPROG2\FinalProject\src;
 
 class KanbanCardRepository
 {
