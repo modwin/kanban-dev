@@ -1,8 +1,9 @@
 <?php
 
-namespace WPROG2\FinalProject\src\Repositories;
+namespace WPROG2\FinalProject\src\Repository;
 use PDO;
 use PDOException;
+use WPROG2\FinalProject\src\Model\User;
 
 class UserRepository
 {
@@ -10,7 +11,7 @@ class UserRepository
     {
     }
 
-    public function addUser() : bool {
+    public function save(User $user) : bool {
         $this->pdo->beginTransaction();
 
         try {
