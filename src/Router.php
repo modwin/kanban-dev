@@ -1,26 +1,23 @@
 <?php
 
 namespace WPROG2\FinalProject\src;
-
-use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\Psr7\Response;
+use WPROG2\FinalProject\src\Http\Request;
+use WPROG2\FinalProject\src\Http\Response;
 
 class Router
 {
-    public function __construct(){
+    public function __construct(private array $routes = [])
+    {
     }
-
-    public function get(string $path) : Response {
-
-        return new Response(200, ["Content-Type" => "application/json"]);
-    }
-
-    public function post(string $path) : Response {
-        return new Response(200, ["Content-Type" => "application/json"]);
-
+    public function add(Route $route) : void {
+        $this->routes[] = $route;
     }
 
     public function dispatch(Request $request) : Response {
-        return new Response(200, ["Content-Type" => "application/json"]);
+        $validRequest = false;
+        if($validRequest) {
+            return new Response();
+        }
+        return new Response();
     }
 }
