@@ -63,7 +63,7 @@ class EnvSetter
     public static function load(string $envPath, bool $overwrite = false): void
     {
         $envSetter = new self($envPath);
-        $envSetter->load($envPath, overwrite: $overwrite);
+        $envSetter->loadVars(overwrite: $overwrite);
     }
 
     public function getEnvPath(): string
