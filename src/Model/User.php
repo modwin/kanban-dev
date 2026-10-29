@@ -4,15 +4,22 @@ declare(strict_types=1);
 
 namespace WPROG2\FinalProject\Model;
 
+use WPROG2\FinalProject\Model\Enum\UserRole;
+
 readonly class User
 {
     public function __construct(
         private int    $id,
         private string $username,
         private string $password,
-        private string $role,
+        private UserRole $role,
 
     ){}
+
+    public function getRole(): UserRole
+    {
+        return $this->role;
+    }
 
     public function getId(): int
     {
@@ -27,11 +34,6 @@ readonly class User
     public function getPassword(): string
     {
         return $this->password;
-    }
-
-    public function getRole(): string
-    {
-        return $this->role;
     }
 
 
