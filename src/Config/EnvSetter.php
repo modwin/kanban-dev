@@ -22,7 +22,7 @@ class EnvSetter
      * @param string|null $overridePath Sätts om du vill ange en specifik sökväg vid anropet.
      * @param bool $overwrite Sätts till true om befintliga miljövariabler ska skrivas över (default: false).
      */
-    public function load(?string $overridePath = null, bool $overwrite = false): void
+    public function loadVars(?string $overridePath = null, bool $overwrite = false): void
     {
         $path = $overridePath ?? $this->envPath;
 
@@ -60,10 +60,10 @@ class EnvSetter
     /**
      * Statisk snabbmetod för enkel-radsanrop utan att manuellt instansiera klassen.
      */
-    public static function loadFrom(string $envPath, bool $overwrite = false): void
+    public static function load(string $envPath, bool $overwrite = false): void
     {
         $envSetter = new self($envPath);
-        $envSetter->load(overwrite: $overwrite);
+        $envSetter->load($envPath, overwrite: $overwrite);
     }
 
     public function getEnvPath(): string
