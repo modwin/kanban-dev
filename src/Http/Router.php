@@ -1,8 +1,6 @@
 <?php
 
-namespace WPROG2\FinalProject\src;
-use WPROG2\FinalProject\src\Http\Request;
-use WPROG2\FinalProject\src\Http\Response;
+namespace WPROG2\FinalProject\src\Http;
 
 class Router
 {
