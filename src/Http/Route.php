@@ -14,7 +14,7 @@ class Route
 
     public function matches(string $metod, string $uri): bool
     {
-        if (strtoupper($this->method) === strtoupper($metod)) {
+        if (strtoupper($this->method) !== strtoupper($metod)) {
             return false;
         }
         $pattern = '#^' . preg_replace('#\{([a-zA-Z0-9_]+)\}#', '(?P<$1>[a-zA-Z0-9_]+)', $this->pathPattern) . '$#';
