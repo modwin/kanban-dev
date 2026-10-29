@@ -1,10 +1,16 @@
 <?php
+declare(strict_types=1);
+
 namespace WPROG2\FinalProject\public;
 
-header('Content-Type: application/json; charset=utf-8');
+$database = require_once dirname(__DIR__) . '/src/bootstrap.php';
 
+use WPROG2\FinalProject\src\Repository\UserRepository;
+use WPROG2\FinalProject\src\Repository\KanbanCardRepository;
+use WPROG2\FinalProject\src\Controller\KanbanCardController;
 
-$http_requests = $_SERVER["REQUEST_URI"];
-$router = new Router($http_requests);
-$envSetter = new EnvSetter(__DIR__ . '/../.env');
-$envSetter->load();
+// Databasen som instansierades i bootstrap.php används för mina repositories.
+$userRepository = new UserRepository($database);
+$cardRepository = new KanbanCardRepository($database);
+
+$cardController = new KanbanCardController($cardRepository);
