@@ -1,6 +1,8 @@
 <?php
 
-namespace WPROG2\FinalProject\src\Http;
+declare(strict_types=1);
+
+namespace WPROG2\FinalProject\Http;
 
 class Request
 {

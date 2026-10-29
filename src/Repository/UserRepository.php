@@ -1,6 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WPROG2\FinalProject\src\Repository;
+
 use PDO;
 use PDOException;
 use WPROG2\FinalProject\src\Model\User;
@@ -11,7 +14,8 @@ class UserRepository
     {
     }
 
-    public function save(User $user) : bool {
+    public function save(User $user): bool
+    {
         $this->pdo->beginTransaction();
 
         try {
@@ -19,20 +23,21 @@ class UserRepository
             $statement = $this->pdo->prepare("INSERT QUERY HERE");
 
             $statement->execute([
-                'username'=>"",
-                'password'=>"",
-                'role'=>""]);
+                'username' => "",
+                'password' => "",
+                'role' => ""]);
 
             $this->pdo->commit();
 
-        }catch (PDOException $e){
+        } catch (PDOException $e) {
             $this->pdo->rollBack();
             throw $e;
         }
         return false;
     }
 
-    public function  findAll() : array {
+    public function findAll(): array
+    {
         return [];
     }
 }

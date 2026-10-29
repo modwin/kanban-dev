@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WPROG2\FinalProject\src\Http;
 
 class Router

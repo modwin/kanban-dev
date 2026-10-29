@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WPROG2\FinalProject\src\Repository;
 
+use PDO;
 use PDOException;
 use WPROG2\FinalProject\src\Model\KanbanCard;
 

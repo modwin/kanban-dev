@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WPROG2\FinalProject\src;
 use const WPROG2\FinalProject\public\HOUR_IN_SECONDS;
 
