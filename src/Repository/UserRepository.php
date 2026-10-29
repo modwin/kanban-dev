@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace WPROG2\FinalProject\src\Repository;
+namespace WPROG2\FinalProject\Repository;
 
 use PDO;
 use PDOException;
-use WPROG2\FinalProject\src\Model\User;
+use WPROG2\FinalProject\Model\User;
 
 class UserRepository
 {

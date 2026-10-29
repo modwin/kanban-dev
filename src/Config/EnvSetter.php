@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WPROG2\FinalProject\src\Config;
+namespace WPROG2\FinalProject\Config;
 
 class EnvSetter
 {

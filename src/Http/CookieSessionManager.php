@@ -2,8 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WPROG2\FinalProject\src;
-use const WPROG2\FinalProject\public\HOUR_IN_SECONDS;
+namespace WPROG2\FinalProject\Http;
 
 const MINUTE_IN_SECONDS = 60;
 const HOUR_IN_SECONDS = MINUTE_IN_SECONDS * MINUTE_IN_SECONDS;

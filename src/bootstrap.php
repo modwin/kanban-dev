@@ -5,8 +5,8 @@ declare(strict_types=1);
 require_once __DIR__ . '/Config/EnvSetter.php';
 require_once __DIR__ . '/Database/Database.php';
 
-use WPROG2\FinalProject\src\Config\EnvSetter;
-use WPROG2\FinalProject\src\Database\Database;
+use WPROG2\FinalProject\Config\EnvSetter;
+use WPROG2\FinalProject\Database\Database;
 
 ini_set("display_errors", 1);
 

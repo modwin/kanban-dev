@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace WPROG2\FinalProject\src\Repository;
+namespace WPROG2\FinalProject\Repository;
 
 use PDO;
 use PDOException;
-use WPROG2\FinalProject\src\Model\KanbanCard;
+use WPROG2\FinalProject\Model\KanbanCard;
 
 class KanbanCardRepository
 {

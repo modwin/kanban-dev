@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace WPROG2\FinalProject\src\Controller;
+namespace WPROG2\FinalProject\Controller;
 
-use WPROG2\FinalProject\src\Repository\UserRepository;
+use WPROG2\FinalProject\Repository\UserRepository;
 
 class UserController
 {

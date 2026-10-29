@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WPROG2\FinalProject\src\Model;
+namespace WPROG2\FinalProject\Model;
 
 readonly class User
 {
