@@ -7,7 +7,7 @@ namespace WPROG2\FinalProject\Http;
 const MINUTE_IN_SECONDS = 60;
 const HOUR_IN_SECONDS = MINUTE_IN_SECONDS * MINUTE_IN_SECONDS;
 
-class CookieSessionManager
+class SessionManager
 {
     private readonly int $lifespanSeconds;
     private string $cookieName;
