@@ -9,32 +9,21 @@ use WPROG2\FinalProject\Model\Enum\UserRole;
 readonly class User
 {
     public function __construct(
-        private int    $id,
-        private string $username,
-        private string $password,
-        private UserRole $role,
+        public int      $id,
+        public string   $username,
+        public string   $password,
+        public UserRole $role,
 
     ){}
 
-    public function getRole(): UserRole
+    public static function fromJson(): self
     {
-        return $this->role;
+        return new self(
+            id: (int) $_POST['id'],
+            username: $_POST['username'],
+            password: $_POST['password'],
+            role: $_POST['role'],
+        );
     }
-
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
-    public function getUsername(): string
-    {
-        return $this->username;
-    }
-
-    public function getPassword(): string
-    {
-        return $this->password;
-    }
-
 
 }
