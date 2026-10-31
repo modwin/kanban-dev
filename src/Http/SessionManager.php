@@ -9,14 +9,14 @@ const HOUR_IN_SECONDS = MINUTE_IN_SECONDS * MINUTE_IN_SECONDS;
 
 class SessionManager
 {
-    private readonly int $lifespanSeconds;
-    private string $cookieName;
-    private bool $isSecure;
+    public readonly int $lifespanSeconds;
+    public string $cookieName;
 
-    public function __construct(int $hours = 3, string $cookieName = 'session_id', bool $isSecure = false)
+    public function __construct(int $hours = 3, string $cookieName = 'session_id')
     {
         $this->cookieName = $cookieName;
         $this->lifespanSeconds = $hours * HOUR_IN_SECONDS;
-        $this->isSecure = $isSecure; // 1. Tilldela värdet till egenskapen
     }
+
+
 }
