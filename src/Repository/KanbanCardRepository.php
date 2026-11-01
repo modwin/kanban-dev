@@ -49,26 +49,31 @@ readonly class KanbanCardRepository
         return $stmt->execute([':id' => $id, ':user_id' => $userId]);
     }
 
-    public function update(int $id, int $userId, KanbanCardDto $card): bool
+    public function update(int $id, int $userId, KanbanCard $card): bool
     {
         $stmt = $this->pdo->prepare("
             UPDATE tasks
-            SET status = :status, 
-                description=:description,  
-                priority=:priority, 
-                issue_type=:issue_type, 
-                branch_name=:branch_name ,
+            SET title = :title,
+                description = :description,
+                status = :status, 
+                priority = :priority, 
+                issue_type = :issue_type, 
+                story_points = :story_points,
+                branch_name = :branch_name,
                 updated_at = CURRENT_TIMESTAMP
             WHERE id = :id AND user_id = :user_id
         ");
+
         return $stmt->execute([
-            ':status'  => $card->status,
-            ':description' => $card->description,
-            ':priority' => $card->priority,
-            ':issue_type' => $card->issueType,
-            ':branch_name' => $card->branchName,
-            ':id'      => $id,
-            ':user_id' => $userId,
+            ':title'        => $card->title,
+            ':description'  => $card->description,
+            ':status'       => $card->status->value,
+            ':priority'     => $card->priority->value,
+            ':issue_type'   => $card->issueType->value,
+            ':story_points' => $card->storyPoints,
+            ':branch_name'  => $card->branchName,
+            ':id'           => $id,
+            ':user_id'      => $userId,
         ]);
     }
 
