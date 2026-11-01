@@ -31,33 +31,36 @@ readonly class KanbanCard implements JsonSerializable
      *  Converts a json object to a KanbanCard object.
      * @return self
      */
-    public static function fromArray(array $data) : self {
+    public static function fromArray(array $data): self
+    {
         return new self(
             id: isset($data['id']) ? (int)$data['id'] : null,
             userId: (int)$data['user_id'],
-            title: $data['title'],
+            title: (string)$data['title'],
             description: $data['description'] ?? null,
-            status: $data['status'] ?? 'backlog',
-            issueType: $data['issue_type'] ?? 'feature',
-            priority: $data['priority'] ?? 'P2',
-            storyPoints: (int)($data['story_points'] ?? 1),
+            status: CardStatus::from($data['status'] ?? 'backlog'),
+            issueType: IssueType::from($data['issue_type'] ?? 'feature'),
+            priority: Priority::from($data['priority'] ?? 'P2'),
+            storyPoints: (int)($data['story_points'] ?? 0),
             branchName: $data['branch_name'] ?? null,
             createdAt: $data['created_at'] ?? null,
-            updatedAt: $data['updated_at'] ?? null
+            updatedAt: $data['updated_at'] ?? null,
         );
     }
 
-    public static function fromDto(int $userId, KanbanCardDto $dto): self{
+    public static function fromDto(int $userId, KanbanCardDto $dto, ?int $id = null): self
+    {
         return new self(
-            $userId,
-            $userId,
-            $dto->title,
-            $dto->description,
-            $dto->status,
-            $dto->issueType,
-            $dto->priority,
-            $dto->storyPoints,
-            $dto->branchName);
+            id: $id,
+            userId: $userId,
+            title: $dto->title,
+            description: $dto->description,
+            status: $dto->status,
+            issueType: $dto->issueType,
+            priority: $dto->priority,
+            storyPoints: $dto->storyPoints,
+            branchName: $dto->branchName,
+        );
     }
 
     public function jsonSerialize(): mixed
