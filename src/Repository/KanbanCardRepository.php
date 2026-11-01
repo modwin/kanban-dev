@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace WPROG2\FinalProject\Repository;
 
 use PDO;
-use PDOException;
 use WPROG2\FinalProject\Model\KanbanCard;
 
 readonly class KanbanCardRepository
@@ -14,38 +13,23 @@ readonly class KanbanCardRepository
 
     public function create(KanbanCard $card): int
     {
-        $this->pdo->beginTransaction();
-
-        try {
-            $stmt = $this->pdo->prepare("
+        $stmt = $this->pdo->prepare("
             INSERT INTO tasks (user_id, title, description, status, issue_type, priority, story_points, branch_name)
             VALUES (:user_id, :title, :description, :status, :issue_type, :priority, :story_points, :branch_name)
         ");
 
-            $stmt->execute([
-                ':user_id'      => $card->userId,
-                ':title'        => $card->title,
-                ':description'  => $card->description,
-                ':status'       => $card->status->value,
-                ':issue_type'   => $card->issueType->value,
-                ':priority'     => $card->priority->value,
-                ':story_points' => $card->storyPoints,
-                ':branch_name'  => $card->branchName,
-            ]);
-            $this->pdo->commit();
-
-        } catch (PDOException $e) {
-            $this->pdo->rollBack();
-            throw $e;
-        }
+        $stmt->execute([
+            ':user_id'      => $card->userId,
+            ':title'        => $card->title,
+            ':description'  => $card->description,
+            ':status'       => $card->status->value,
+            ':issue_type'   => $card->issueType->value,
+            ':priority'     => $card->priority->value,
+            ':story_points' => $card->storyPoints,
+            ':branch_name'  => $card->branchName,
+        ]);
 
         return (int)$this->pdo->lastInsertId();
-    }
-
-    public function delete(int $id, int $userId): bool
-    {
-        $stmt = $this->pdo->prepare("DELETE FROM tasks WHERE id = :id AND user_id = :user_id");
-        return $stmt->execute([':id' => $id, ':user_id' => $userId]);
     }
 
     public function update(int $id, int $userId, KanbanCard $card): bool
@@ -74,6 +58,26 @@ readonly class KanbanCardRepository
             ':id'           => $id,
             ':user_id'      => $userId,
         ]);
+    }
+
+    public function updateStatus(int $id, int $userId, string $status): bool
+    {
+        $stmt = $this->pdo->prepare("
+            UPDATE tasks
+            SET status = :status, updated_at = CURRENT_TIMESTAMP
+            WHERE id = :id AND user_id = :user_id
+        ");
+        return $stmt->execute([
+            ':status'  => $status,
+            ':id'      => $id,
+            ':user_id' => $userId,
+        ]);
+    }
+
+    public function delete(int $id, int $userId): bool
+    {
+        $stmt = $this->pdo->prepare("DELETE FROM tasks WHERE id = :id AND user_id = :user_id");
+        return $stmt->execute([':id' => $id, ':user_id' => $userId]);
     }
 
     public function findAllByUserId(int $userId): array

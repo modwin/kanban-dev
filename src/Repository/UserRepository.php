@@ -10,30 +10,21 @@ use WPROG2\FinalProject\Model\User;
 
 readonly class UserRepository
 {
-    public function __construct(private readonly PDO $pdo)
-    {
-    }
+    public function __construct(private PDO $pdo){}
 
     public function create(User $user): int
     {
-        $this->pdo->beginTransaction();
+        $stmt = $this->pdo->prepare("
+            INSERT INTO users (username, password_hash, role)
+            VALUES (:username, :password, :role)
+        ");
 
-        try {
-            $statement = $this->pdo->prepare("
-            INSERT INTO users (username, password, role)
-            VALUES (:username, :password, :role)");
+        $stmt->execute([
+            ':username' => $user->username,
+            ':password' => $user->password,
+            ':role'     => $user->role->value,
+        ]);
 
-            $statement->execute([
-                'username' => $user->username,
-                'password' => $user->password,
-                'role' => $user->role]);
-
-            $this->pdo->commit();
-
-        } catch (PDOException $e) {
-            $this->pdo->rollBack();
-            throw $e;
-        }
         return (int)$this->pdo->lastInsertId();
     }
 
@@ -59,13 +50,21 @@ readonly class UserRepository
             'userId' => $userId]);
     }
 
-    public function findByUserId($userId): bool
+    public function findByUserId(int $userId): ?User
     {
-        $statement = $this->pdo->prepare("
-        SELECT * FROM users
-        WHERE id = :userId");
+        $stmt = $this->pdo->prepare("SELECT id, username, password_hash, role FROM users WHERE id = :id LIMIT 1");
+        $stmt->execute([':id' => $userId]);
+        $row = $stmt->fetch();
 
-        return $statement->execute([
-            'userId' => $userId]);
+        return $row ? User::fromArray($row) : null;
+    }
+
+    public function findByUsername(string $username): ?User
+    {
+        $stmt = $this->pdo->prepare("SELECT id, username, password_hash, role FROM users WHERE username = :username LIMIT 1");
+        $stmt->execute([':username' => $username]);
+        $row = $stmt->fetch();
+
+        return $row ? User::fromArray($row) : null;
     }
 }
