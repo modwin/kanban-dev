@@ -2,7 +2,10 @@ const statuses = ['backlog', 'in_progress', 'code_review', 'testing', 'done'];
 
 async function fetchCards() {
     const res = await fetch('/api/cards');
-    if (res.status === 401) { window.location.href = '/login.html'; return; }
+    if (res.status === 401) {
+        window.location.href = '/login.html';
+        return;
+    }
     const json = await res.json();
     renderBoard(json.data || []);
 }
@@ -39,15 +42,15 @@ function renderBoard(cards) {
 async function updateStatus(id, status) {
     await fetch(`/api/cards/${id}/status`, {
         method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status })
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({status})
     });
     fetchCards();
 }
 
 async function deleteCard(id) {
     if (!confirm('Delete this task?')) return;
-    await fetch(`/api/cards/${id}`, { method: 'DELETE' });
+    await fetch(`/api/cards/${id}`, {method: 'DELETE'});
     fetchCards();
 }
 
@@ -62,14 +65,30 @@ async function submitCard() {
     };
     const res = await fetch('/api/cards', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(payload)
     });
-    if (res.ok) { closeModal('card-modal'); fetchCards(); }
-    else { const err = await res.json(); alert(err.error || 'Failed to create card'); }
+    if (res.ok) {
+        closeModal('card-modal');
+        fetchCards();
+    } else {
+        const err = await res.json();
+        alert(err.error || 'Failed to create card');
+    }
 }
 
-function openModal(id) { document.getElementById(id).classList.add('active'); }
-function closeModal(id) { document.getElementById(id).classList.remove('active'); }
-async function logout() { await fetch('/api/auth/logout', { method: 'POST' }); window.location.reload(); }
+async function logout() {
+    await fetch('/api/auth/logout', {method: 'POST'});
+    window.location.href = '/login.html';
+}
+
+
+function openModal(id) {
+    document.getElementById(id).classList.add('active');
+}
+
+function closeModal(id) {
+    document.getElementById(id).classList.remove('active');
+}
+
 fetchCards().then();
