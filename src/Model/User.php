@@ -21,19 +21,9 @@ readonly class User implements JsonSerializable
     {
         return new self(
             id: (int) $data['id'],
-            username: $data['username'],
-            password: $data['password'],
-            role: $data['role'],
-        );
-    }
-
-    public static function fromDto(array $data): self
-    {
-        return new self(
-            id: (int) $data['id'],
-            username: $data['username'],
-            password: $data['password'],
-            role: UserRole::from($data['role']),
+            username: (string) $data['username'],
+            password: (string) ($data['password_hash'] ?? $data['password']),
+            role: $data['role'] instanceof UserRole ? $data['role'] : UserRole::from((string) $data['role']),
         );
     }
 
