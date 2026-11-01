@@ -3,7 +3,7 @@ const statuses = ['backlog', 'in_progress', 'code_review', 'testing', 'done'];
 async function fetchCards() {
     const res = await fetch('/api/cards');
     if (res.status === 401) {
-        window.location.href = '/login.html';
+        window.location.href = '/login';
         return;
     }
     const json = await res.json();
@@ -79,7 +79,21 @@ async function submitCard() {
 
 async function logout() {
     await fetch('/api/auth/logout', {method: 'POST'});
-    window.location.href = '/login.html';
+    window.location.href = '/login';
+}
+
+async function showAuthenticatedUser() {
+    const response = await fetch('/api/auth/me');
+    if (response.status === 401) {
+        window.location.href = '/login';
+        return;
+    }
+
+    const json = await response.json();
+    const heading = document.querySelector('header h1');
+    if (json.data?.username) {
+        heading.textContent = `⚡ DevKanban — ${json.data.username}`;
+    }
 }
 
 
@@ -91,4 +105,5 @@ function closeModal(id) {
     document.getElementById(id).classList.remove('active');
 }
 
+showAuthenticatedUser();
 fetchCards().then();

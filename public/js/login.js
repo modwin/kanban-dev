@@ -45,5 +45,5 @@ form.addEventListener('submit', async (e) => {
         if (!loginRes.ok) { mode = 'login'; toggleBtn.click(); return; }
     }
 
-    window.location.href = '/index.html';
+    window.location.href = '/';
 });
