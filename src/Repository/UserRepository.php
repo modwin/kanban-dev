@@ -8,24 +8,25 @@ use PDO;
 use PDOException;
 use WPROG2\FinalProject\Model\User;
 
-class UserRepository
+readonly class UserRepository
 {
-    public function __construct(private PDO $pdo)
+    public function __construct(private readonly PDO $pdo)
     {
     }
 
-    public function save(User $user): bool
+    public function create(User $user): int
     {
         $this->pdo->beginTransaction();
 
         try {
-            // INSERT INTO users...
-            $statement = $this->pdo->prepare("INSERT QUERY HERE");
+            $statement = $this->pdo->prepare("
+            INSERT INTO users (username, password, role)
+            VALUES (:username, :password, :role)");
 
             $statement->execute([
-                'username' => "",
-                'password' => "",
-                'role' => ""]);
+                'username' => $user->username,
+                'password' => $user->password,
+                'role' => $user->role]);
 
             $this->pdo->commit();
 
@@ -33,11 +34,38 @@ class UserRepository
             $this->pdo->rollBack();
             throw $e;
         }
-        return false;
+        return (int)$this->pdo->lastInsertId();
     }
 
-    public function findAll(): array
+    public function update(User $user): bool
     {
-        return [];
+        $statement = $this->pdo->prepare("
+        UPDATE users
+        SET password = :password,
+            role = :role");
+
+        return $statement->execute([
+            'password' => $user->password,
+            'role' => $user->role->value]);
+    }
+
+    public function deleteByUserId(int $userId): bool
+    {
+        $statement = $this->pdo->prepare("
+        DELETE FROM users
+        WHERE id = :userId");
+
+        return $statement->execute([
+            'userId' => $userId]);
+    }
+
+    public function findByUserId($userId): bool
+    {
+        $statement = $this->pdo->prepare("
+        SELECT * FROM users
+        WHERE id = :userId");
+
+        return $statement->execute([
+            'userId' => $userId]);
     }
 }
