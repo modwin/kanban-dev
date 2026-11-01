@@ -62,6 +62,18 @@ readonly class KanbanCard implements JsonSerializable
 
     public function jsonSerialize(): mixed
     {
-        // TODO: Implement jsonSerialize() method.
+        return [
+            'id' => $this->id,
+            'user_id' => $this->userId,
+            'title' => $this->title,
+            'description' => $this->description,
+            'status' => $this->status->value,
+            'issue_type' => $this->issueType->value,
+            'priority' => $this->priority->value,
+            'story_points' => $this->storyPoints,
+            'branch_name' => $this->branchName,
+            'created_at' => $this->createdAt,
+            'updated_at' => $this->updatedAt,
+        ];
     }
 }
