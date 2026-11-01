@@ -8,33 +8,62 @@ use PDO;
 use PDOException;
 use WPROG2\FinalProject\Model\KanbanCard;
 
-class KanbanCardRepository
+readonly class KanbanCardRepository
 {
-    public function __construct(private PDO $pdo)
+    public function __construct(private PDO $pdo){}
+
+    public function create(KanbanCard $card): int
     {
-    }
-    public function save(KanbanCard $card) : bool {
         $this->pdo->beginTransaction();
 
         try {
-            // INSERT INTO users...
-            $statement = $this->pdo->prepare("INSERT QUERY HERE");
+            $stmt = $this->pdo->prepare("
+            INSERT INTO tasks (user_id, title, description, status, issue_type, priority, story_points, branch_name)
+            VALUES (:user_id, :title, :description, :status, :issue_type, :priority, :story_points, :branch_name)
+        ");
 
-            $statement->execute([
-                'username'=>"",
-                'password'=>"",
-                'role'=>""]);
-
+            $stmt->execute([
+                ':user_id'      => $card->userId,
+                ':title'        => $card->title,
+                ':description'  => $card->description,
+                ':status'       => $card->status->value,
+                ':issue_type'   => $card->issueType->value,
+                ':priority'     => $card->priority->value,
+                ':story_points' => $card->storyPoints,
+                ':branch_name'  => $card->branchName,
+            ]);
             $this->pdo->commit();
 
-        }catch (PDOException $e){
+        } catch (PDOException $e) {
             $this->pdo->rollBack();
             throw $e;
         }
-        return false;
+
+        return (int)$this->pdo->lastInsertId();
     }
 
-    public function  findAll() : array {
-        return [];
+    public function delete(int $id, int $userId): bool
+    {
+        $stmt = $this->pdo->prepare("DELETE FROM tasks WHERE id = :id AND user_id = :user_id");
+        return $stmt->execute([':id' => $id, ':user_id' => $userId]);
     }
+
+    public function findAllByUserId(int $userId): array
+    {
+        $stmt = $this->pdo->prepare("
+            SELECT id, user_id, title, description, status, issue_type, priority, story_points, branch_name, created_at, updated_at
+            FROM tasks
+            WHERE user_id = :user_id
+            ORDER BY created_at DESC
+        ");
+        $stmt->execute([':user_id' => $userId]);
+
+        $cards = [];
+        while ($row = $stmt->fetch()) {
+            $cards[] = KanbanCard::fromArray($row);
+        }
+        return $cards;
+    }
+
+
 }

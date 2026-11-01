@@ -6,17 +6,28 @@ namespace WPROG2\FinalProject\Http;
 
 const MINUTE_IN_SECONDS = 60;
 const HOUR_IN_SECONDS = MINUTE_IN_SECONDS * MINUTE_IN_SECONDS;
-
+const LIFESPAN_SECONDS = 3 * HOUR_IN_SECONDS;
+/**
+ * Wrapper class for PHP's session functions and session/login management.
+ */
 class SessionManager
 {
-    public readonly int $lifespanSeconds;
-    public string $cookieName;
 
-    public function __construct(int $hours = 3, string $cookieName = 'session_id')
+    public static function start_session(): void
     {
-        $this->cookieName = $cookieName;
-        $this->lifespanSeconds = $hours * HOUR_IN_SECONDS;
+        if (session_status() === PHP_SESSION_NONE) {
+            session_set_cookie_params([
+                'lifetime' => LIFESPAN_SECONDS,
+                'path' => '/',
+                'domain' => null,
+                'secure' => isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on',
+                'httponly' => true,
+                'samesite' => 'Strict'
+            ]);
+            session_start();
+        }
     }
+
 
 
 }
