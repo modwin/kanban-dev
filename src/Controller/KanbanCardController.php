@@ -63,4 +63,16 @@ class KanbanCardController
         }
     }
 
+    public function delete(ServerRequestInterface $request, array $params): ResponseInterface
+    {
+        $userId = SessionManager::getUserId();
+        if ($userId === null) {
+            return new Response(401, ['Content-Type' => 'application/json'], json_encode(['error' => 'Unauthorized']));
+        }
+
+        $cardId = (int)($params['id'] ?? 0);
+        $this->cardService->deleteCard($cardId, $userId);
+        return new Response(200, ['Content-Type' => 'application/json'], json_encode(['message' => 'Card deleted']));
+    }
+
 }
