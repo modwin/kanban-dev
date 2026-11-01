@@ -12,13 +12,17 @@ class Route
         private mixed  $handler
     ){}
 
-    public function match(string $metod, string $uri): bool
+    public function match(string $method, string $uri): ?array
     {
-        if (strtoupper($this->method) !== strtoupper($metod)) {
-            return false;
+        if (strtoupper($this->method) !== strtoupper($method)) {
+            return null;
         }
-        $pattern = '#^' . preg_replace('#\{([a-zA-Z0-9_]+)\}#', '(?P<$1>[a-zA-Z0-9_]+)', $this->pathPattern) . '$#';
-        return (bool)preg_match($pattern, $uri);
+        $pattern = '#^' . preg_replace('#\{([a-zA-Z0-9_]+)\}#', '(?P<$1>[^/]+)', $this->pathPattern) . '$#';
+        if (preg_match($pattern, $uri, $matches)) {
+            return array_filter($matches, 'is_string', ARRAY_FILTER_USE_KEY);
+        }
+
+        return null;
     }
 
     public function getHandler(): mixed
