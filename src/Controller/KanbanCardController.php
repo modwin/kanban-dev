@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 namespace WPROG2\FinalProject\Controller;
-use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use InvalidArgumentException;
 use WPROG2\FinalProject\Dto\KanbanCardDto;
@@ -18,7 +17,7 @@ class KanbanCardController
 
     public function list(ServerRequestInterface $request): ResponseInterface
     {
-        $userId = SessionManager::getUserId();
+        $userId = $this->getAuthenticatedUserId();
         if ($userId === null) {
             return new Response(401, ['Content-Type' => 'application/json'], json_encode(['error' => 'Unauthorized']));
         }
@@ -29,7 +28,7 @@ class KanbanCardController
 
     public function create(ServerRequestInterface $request): ResponseInterface
     {
-        $userId = SessionManager::getUserId();
+        $userId = $this->getAuthenticatedUserId();
         if ($userId === null) {
             return new Response(401, ['Content-Type' => 'application/json'], json_encode(['error' => 'Unauthorized']));
         }
@@ -46,7 +45,7 @@ class KanbanCardController
 
     public function updateStatus(ServerRequestInterface $request, array $params): ResponseInterface
     {
-        $userId = SessionManager::getUserId();
+        $userId = $this->getAuthenticatedUserId();
         if ($userId === null) {
             return new Response(401, ['Content-Type' => 'application/json'], json_encode(['error' => 'Unauthorized']));
         }
@@ -65,7 +64,7 @@ class KanbanCardController
 
     public function delete(ServerRequestInterface $request, array $params): ResponseInterface
     {
-        $userId = SessionManager::getUserId();
+        $userId = $this->getAuthenticatedUserId();
         if ($userId === null) {
             return new Response(401, ['Content-Type' => 'application/json'], json_encode(['error' => 'Unauthorized']));
         }
@@ -75,4 +74,8 @@ class KanbanCardController
         return new Response(200, ['Content-Type' => 'application/json'], json_encode(['message' => 'Card deleted']));
     }
 
+    private function getAuthenticatedUserId(): ?int
+    {
+        return SessionManager::getAuthenticatedUser()?->id;
+    }
 }

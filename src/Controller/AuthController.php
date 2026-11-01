@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WPROG2\FinalProject\Controller;
 
 use Exception;
@@ -55,11 +57,11 @@ class AuthController
 
     public function me(): ResponseInterface
     {
-        $userId = SessionManager::getUserId();
-        if ($userId === null) {
+        $userDto = SessionManager::getAuthenticatedUser();
+        if ($userDto === null) {
             return new Response(401, ['Content-Type' => 'application/json'], json_encode(['error' => 'Unauthorized']));
         }
 
-        return new Response(200, ['Content-Type' => 'application/json'], json_encode(['user_id' => $userId]));
+        return new Response(200, ['Content-Type' => 'application/json'], json_encode(['data' => $userDto]));
     }
 }
