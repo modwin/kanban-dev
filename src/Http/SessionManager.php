@@ -7,8 +7,9 @@ namespace WPROG2\FinalProject\Http;
 const MINUTE_IN_SECONDS = 60;
 const HOUR_IN_SECONDS = MINUTE_IN_SECONDS * MINUTE_IN_SECONDS;
 const LIFESPAN_SECONDS = 3 * HOUR_IN_SECONDS;
+
 /**
- * Wrapper class for PHP's session functions and session/login management.
+ * Class for PHP's session functions and session/login management.
  */
 class SessionManager
 {
@@ -38,8 +39,32 @@ class SessionManager
 
     public static function logout(): void
     {
-        session_unset();
+        self::start_session();
+        $_SESSION = [];
+        if (ini_get("session.use_cookies")) {
+            $params = session_get_cookie_params();
+            setcookie(
+                session_name(),
+                '',
+                time() - 42000,
+                $params["path"],
+                $params["domain"],
+                $params["secure"],
+                $params["httponly"]
+            );
+        }
         session_destroy();
+    }
+
+    public static function getUserId(): ?int
+    {
+        self::start_session();
+        return isset($_SESSION['user_id']) ? (int)$_SESSION['user_id'] : null;
+    }
+
+    public static function isAuthenticated(): bool
+    {
+        return self::getUserId() !== null;
     }
 
 }

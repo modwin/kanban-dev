@@ -6,7 +6,6 @@ namespace WPROG2\FinalProject\Repository;
 
 use PDO;
 use PDOException;
-use WPROG2\FinalProject\Dto\KanbanCardDto;
 use WPROG2\FinalProject\Model\KanbanCard;
 
 readonly class KanbanCardRepository
@@ -93,6 +92,4 @@ readonly class KanbanCardRepository
         }
         return $cards;
     }
-
-
 }
