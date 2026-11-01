@@ -6,6 +6,7 @@ namespace WPROG2\FinalProject\Repository;
 
 use PDO;
 use PDOException;
+use WPROG2\FinalProject\Dto\KanbanCardDto;
 use WPROG2\FinalProject\Model\KanbanCard;
 
 readonly class KanbanCardRepository
@@ -46,6 +47,29 @@ readonly class KanbanCardRepository
     {
         $stmt = $this->pdo->prepare("DELETE FROM tasks WHERE id = :id AND user_id = :user_id");
         return $stmt->execute([':id' => $id, ':user_id' => $userId]);
+    }
+
+    public function update(int $id, int $userId, KanbanCardDto $card): bool
+    {
+        $stmt = $this->pdo->prepare("
+            UPDATE tasks
+            SET status = :status, 
+                description=:description,  
+                priority=:priority, 
+                issue_type=:issue_type, 
+                branch_name=:branch_name ,
+                updated_at = CURRENT_TIMESTAMP
+            WHERE id = :id AND user_id = :user_id
+        ");
+        return $stmt->execute([
+            ':status'  => $card->status,
+            ':description' => $card->description,
+            ':priority' => $card->priority,
+            ':issue_type' => $card->issueType,
+            ':branch_name' => $card->branchName,
+            ':id'      => $id,
+            ':user_id' => $userId,
+        ]);
     }
 
     public function findAllByUserId(int $userId): array
