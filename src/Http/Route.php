@@ -10,11 +10,9 @@ class Route
         private string $method,
         private string $pathPattern,
         private mixed  $handler
-    )
-    {
-    }
+    ){}
 
-    public function matches(string $metod, string $uri): bool
+    public function match(string $metod, string $uri): bool
     {
         if (strtoupper($this->method) !== strtoupper($metod)) {
             return false;
