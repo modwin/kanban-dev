@@ -28,6 +28,18 @@ class SessionManager
         }
     }
 
+    public static function login(int $user_id, string $role): void
+    {
+        self::start_session();
+        session_regenerate_id(true);
+        $_SESSION['user_id'] = $user_id;
+        $_SESSION['role'] = $role;
+    }
 
+    public static function logout(): void
+    {
+        session_unset();
+        session_destroy();
+    }
 
 }
