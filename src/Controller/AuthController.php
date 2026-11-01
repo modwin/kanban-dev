@@ -53,4 +53,13 @@ class AuthController
         return new Response(200, ['Content-Type' => 'application/json'], json_encode(['message' => 'Logged out successfully']));
     }
 
+    public function me(): ResponseInterface
+    {
+        $userId = SessionManager::getUserId();
+        if ($userId === null) {
+            return new Response(401, ['Content-Type' => 'application/json'], json_encode(['error' => 'Unauthorized']));
+        }
+
+        return new Response(200, ['Content-Type' => 'application/json'], json_encode(['user_id' => $userId]));
+    }
 }
