@@ -38,7 +38,7 @@ class AuthService
     public function authenticate(string $username, string $password): User
     {
         $user = $this->userRepository->findByUsername($username);
-        if (!password_verify($password, $user->password)) {
+        if ($user === null || !password_verify($password, $user->password)) {
             throw new InvalidArgumentException("Invalid username or password.");
         }
 
