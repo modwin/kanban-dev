@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace WPROG2\FinalProject\Http;
 
+use WPROG2\FinalProject\Dto\UserDto;
+
 const MINUTE_IN_SECONDS = 60;
 const HOUR_IN_SECONDS = MINUTE_IN_SECONDS * MINUTE_IN_SECONDS;
 const LIFESPAN_SECONDS = 3 * HOUR_IN_SECONDS;
@@ -29,12 +31,13 @@ class SessionManager
         }
     }
 
-    public static function login(int $user_id, string $role): void
+    public static function login(UserDto $userDto): void
     {
         self::start_session();
         session_regenerate_id(true);
-        $_SESSION['user_id'] = $user_id;
-        $_SESSION['role'] = $role;
+        $_SESSION['user_id'] = $userDto->id;
+        $_SESSION['username'] = $userDto->username;
+        $_SESSION['role'] = $userDto->role;
     }
 
     public static function logout(): void
@@ -56,15 +59,19 @@ class SessionManager
         session_destroy();
     }
 
-    public static function getUserId(): ?int
+    public static function getAuthenticatedUser(): ?UserDto
     {
         self::start_session();
-        return isset($_SESSION['user_id']) ? (int)$_SESSION['user_id'] : null;
+        if (isset($_SESSION['user_id'])){
+
+            return new UserDto($_SESSION['user_id'], $_SESSION['username'], $_SESSION['role']);
+        }
+        return null;
     }
 
     public static function isAuthenticated(): bool
     {
-        return self::getUserId() !== null;
+        return self::getAuthenticatedUser() !== null;
     }
 
 }

@@ -4,6 +4,7 @@ namespace WPROG2\FinalProject\Service;
 
 use InvalidArgumentException;
 use RuntimeException;
+use WPROG2\FinalProject\Dto\UserDto;
 use WPROG2\FinalProject\Http\SessionManager;
 use WPROG2\FinalProject\Model\Enum\UserRole;
 use WPROG2\FinalProject\Model\User;
@@ -41,8 +42,8 @@ class AuthService
         if ($user === null || !password_verify($password, $user->password)) {
             throw new InvalidArgumentException("Invalid username or password.");
         }
-
-        SessionManager::login($user->id, $user->role->value);
+        $dto = new UserDto($user->id, $user->username, $user->role);
+        SessionManager::login($dto);
         return $user;
     }
 }
