@@ -44,4 +44,23 @@ class KanbanCardController
         }
     }
 
+    public function updateStatus(ServerRequestInterface $request, array $params): ResponseInterface
+    {
+        $userId = SessionManager::getUserId();
+        if ($userId === null) {
+            return new Response(401, ['Content-Type' => 'application/json'], json_encode(['error' => 'Unauthorized']));
+        }
+
+        $cardId = (int)($params['id'] ?? 0);
+        $data = json_decode((string)$request->getBody(), true) ?? [];
+        $status = (string)($data['status'] ?? '');
+
+        try {
+            $this->cardService->updateCardStatus($cardId, $userId, $status);
+            return new Response(200, ['Content-Type' => 'application/json'], json_encode(['message' => 'Status updated']));
+        } catch (InvalidArgumentException $e) {
+            return new Response(422, ['Content-Type' => 'application/json'], json_encode(['error' => $e->getMessage()]));
+        }
+    }
+
 }
