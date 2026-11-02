@@ -2,13 +2,14 @@
 
 declare(strict_types=1);
 
-namespace WPROG2\FinalProject\Model;
+namespace KanbanDev\Model;
 
 use JsonSerializable;
-use WPROG2\FinalProject\Model\Enum\CardStatus;
-use WPROG2\FinalProject\Model\Enum\IssueType;
-use WPROG2\FinalProject\Model\Enum\Priority;
-use WPROG2\FinalProject\Dto\KanbanCardDto;
+
+use KanbanDev\Model\Enum\CardStatus;
+use KanbanDev\Model\Enum\IssueType;
+use KanbanDev\Model\Enum\Priority;
+use KanbanDev\Dto\KanbanCardDto;
 
 readonly class KanbanCard implements JsonSerializable
 {

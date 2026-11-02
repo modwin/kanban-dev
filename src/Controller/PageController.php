@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WPROG2\FinalProject\Controller;
+namespace KanbanDev\Controller;
 
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;

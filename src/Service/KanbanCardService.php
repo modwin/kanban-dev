@@ -1,12 +1,12 @@
 <?php
 
-namespace WPROG2\FinalProject\Service;
+namespace KanbanDev\Service;
 
 use InvalidArgumentException;
-use WPROG2\FinalProject\Dto\KanbanCardDto;
-use WPROG2\FinalProject\Model\Enum\CardStatus;
-use WPROG2\FinalProject\Model\KanbanCard;
-use WPROG2\FinalProject\Repository\KanbanCardRepository;
+use KanbanDev\Dto\KanbanCardDto;
+use KanbanDev\Model\Enum\CardStatus;
+use KanbanDev\Model\KanbanCard;
+use KanbanDev\Repository\KanbanCardRepository;
 
 readonly class KanbanCardService
 {

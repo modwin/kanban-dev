@@ -1,0 +1,15 @@
+{
+  "name": "modwin/kanban-dev",
+  "description": "Kanban.dev – Agile software dev project task board built with PHP with PSR-X standards, MariaDB MySQL docker, Vanilla JS & HTMl",
+  "type": "project",
+  "require": {
+    "php": ">=8.2",
+    "guzzlehttp/psr7": "^2.13",
+    "ext-pdo": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "KanbanDev\\": "src/"
+    }
+  }
+}

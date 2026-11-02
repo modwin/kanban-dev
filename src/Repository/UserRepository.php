@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace WPROG2\FinalProject\Repository;
+namespace KanbanDev\Repository;
 
 use PDO;
 use PDOException;
-use WPROG2\FinalProject\Model\User;
+use KanbanDev\Model\User;
 
 readonly class UserRepository
 {

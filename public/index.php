@@ -4,17 +4,17 @@ declare(strict_types=1);
 require_once __DIR__ . '/../../../vendor/autoload.php';
 
 use GuzzleHttp\Psr7\ServerRequest;
-use WPROG2\FinalProject\Config\EnvSetter;
-use WPROG2\FinalProject\Database\Database;
-use WPROG2\FinalProject\Http\Route;
-use WPROG2\FinalProject\Http\Router;
-use WPROG2\FinalProject\Repository\UserRepository;
-use WPROG2\FinalProject\Repository\KanbanCardRepository;
-use WPROG2\FinalProject\Service\AuthService;
-use WPROG2\FinalProject\Service\KanbanCardService;
-use WPROG2\FinalProject\Controller\AuthController;
-use WPROG2\FinalProject\Controller\KanbanCardController;
-use WPROG2\FinalProject\Controller\PageController;
+use KanbanDev\Config\EnvSetter;
+use KanbanDev\Controller\AuthController;
+use KanbanDev\Controller\KanbanCardController;
+use KanbanDev\Controller\PageController;
+use KanbanDev\Database\Database;
+use KanbanDev\Http\Route;
+use KanbanDev\Http\Router;
+use KanbanDev\Repository\KanbanCardRepository;
+use KanbanDev\Repository\UserRepository;
+use KanbanDev\Service\AuthService;
+use KanbanDev\Service\KanbanCardService;
 
 // 1. Environment & Database
 EnvSetter::load(__DIR__ . '/../.env');

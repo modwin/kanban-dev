@@ -1,14 +1,14 @@
 <?php
 
-namespace WPROG2\FinalProject\Service;
+namespace KanbanDev\Service;
 
 use InvalidArgumentException;
 use RuntimeException;
-use WPROG2\FinalProject\Dto\UserDto;
-use WPROG2\FinalProject\Http\SessionManager;
-use WPROG2\FinalProject\Model\Enum\UserRole;
-use WPROG2\FinalProject\Model\User;
-use WPROG2\FinalProject\Repository\UserRepository;
+use KanbanDev\Dto\UserDto;
+use KanbanDev\Http\SessionManager;
+use KanbanDev\Model\User;
+use KanbanDev\Model\Enum\UserRole;
+use KanbanDev\Repository\UserRepository;
 
 class AuthService
 {

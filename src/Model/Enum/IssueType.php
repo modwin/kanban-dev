@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WPROG2\FinalProject\Model\Enum;
+namespace KanbanDev\Model\Enum;
 
 enum IssueType: string
 {

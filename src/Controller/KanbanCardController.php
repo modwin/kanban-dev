@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace WPROG2\FinalProject\Controller;
+namespace KanbanDev\Controller;
 use GuzzleHttp\Psr7\Response;
 use InvalidArgumentException;
-use WPROG2\FinalProject\Dto\KanbanCardDto;
+use KanbanDev\Dto\KanbanCardDto;
+use KanbanDev\Http\SessionManager;
+use KanbanDev\Service\KanbanCardService;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use WPROG2\FinalProject\Http\SessionManager;
-use WPROG2\FinalProject\Service\KanbanCardService;
 
 class KanbanCardController
 {

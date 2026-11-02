@@ -1,11 +1,11 @@
 <?php
 
-namespace WPROG2\FinalProject\Dto;
+namespace KanbanDev\Dto;
 
 use InvalidArgumentException;
-use WPROG2\FinalProject\Model\Enum\CardStatus;
-use WPROG2\FinalProject\Model\Enum\IssueType;
-use WPROG2\FinalProject\Model\Enum\Priority;
+use KanbanDev\Model\Enum\CardStatus;
+use KanbanDev\Model\Enum\IssueType;
+use KanbanDev\Model\Enum\Priority;
 
 readonly class KanbanCardDto
 {

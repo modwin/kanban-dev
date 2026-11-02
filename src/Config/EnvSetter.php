@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WPROG2\FinalProject\Config;
+namespace KanbanDev\Config;
 
 class EnvSetter
 {

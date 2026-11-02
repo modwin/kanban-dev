@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace WPROG2\FinalProject\Controller;
+namespace KanbanDev\Controller;
 
 use Exception;
 use GuzzleHttp\Psr7\Response;
 use InvalidArgumentException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use WPROG2\FinalProject\Http\SessionManager;
-use WPROG2\FinalProject\Model\Enum\UserRole;
-use WPROG2\FinalProject\Service\AuthService;
+use KanbanDev\Http\SessionManager;
+use KanbanDev\Model\Enum\UserRole;
+use KanbanDev\Service\AuthService;
 
 class AuthController
 {

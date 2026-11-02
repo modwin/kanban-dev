@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace WPROG2\FinalProject\Http;
+namespace KanbanDev\Http;
 
-use WPROG2\FinalProject\Dto\UserDto;
+use KanbanDev\Dto\UserDto;
 
 const MINUTE_IN_SECONDS = 60;
 const HOUR_IN_SECONDS = MINUTE_IN_SECONDS * MINUTE_IN_SECONDS;

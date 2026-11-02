@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace WPROG2\FinalProject\Repository;
+namespace KanbanDev\Repository;
 
 use PDO;
-use WPROG2\FinalProject\Model\KanbanCard;
+use KanbanDev\Model\KanbanCard;
 
 readonly class KanbanCardRepository
 {

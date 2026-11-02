@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WPROG2\FinalProject\Http;
+namespace KanbanDev\Http;
 
 class Route
 {

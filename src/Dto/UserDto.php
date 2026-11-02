@@ -1,8 +1,8 @@
 <?php
 
-namespace WPROG2\FinalProject\Dto;
+namespace KanbanDev\Dto;
 
-use WPROG2\FinalProject\Model\Enum\UserRole;
+use KanbanDev\Model\Enum\UserRole;
 
 readonly class UserDto
 {

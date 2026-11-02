@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace WPROG2\FinalProject\Model;
+namespace KanbanDev\Model;
 
 use JsonSerializable;
-use WPROG2\FinalProject\Model\Enum\UserRole;
+use KanbanDev\Model\Enum\UserRole;
 
 readonly class User implements JsonSerializable
 {
