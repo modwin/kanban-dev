@@ -1,40 +1,47 @@
 # Kanban.dev
 
-A focused task management board designed specifically for software engineering teams working in Scrum/Agile workflows. Built with modern, strictly-typed PHP (PSR-7), MariaDB, and reactive Vanilla JavaScript.
+A task management web application designed for software engineering workflows. Built from scratch with PHP 8.2 (PSR-7), MariaDB, and Vanilla JavaScript.
 
 ![Kanban.dev Board Overview](screenshots/populated-board-overview.png)
 
-## Background & Motivation
-Generic board tools like Trello work well for general checklists, but lack native concepts essential to software engineering without third-party plugins. Developers typically need immediate visibility into:
-- Git branch associations
-- Story point estimates
-- Strict issue categorization (Bugs vs. Features vs. Technical Debt)
-- Blocker priorities (P0 to P4)
-- A clear 5-stage progression pipeline (Backlog → In Progress → Code Review → Testing → Done)
+## Overview
 
-Kanban.dev was built to provide an opinionated, lightweight alternative: keeping the board simple and fast while ensuring that core engineering metadata is visible at a glance directly on each task card.
+Generic tools like Trello require extra setup or plugins to track engineering metadata. **Kanban.dev** builds these concepts directly into each card:
+
+* **Git Branch Tagging** (`fix/auth`, `feat/rate`)
+* **Story Point Estimation** & **Prioritization** (P0 Blocker through P4)
+* **Issue Categorization** (Bugs, Features, Tech Debt with custom visual indicators)
+* **5-Stage Pipeline** (Backlog → In Progress → Code Review → Testing → Done)
 
 ---
 
-## Technical Overview
+## Interface & Workflow
 
-### Architecture & Standards
-The application follows a clean, layered architecture with strict typing (`declare(strict_types=1)`):
+<table width="100%">
+  <tr>
+    <td width="50%" align="center">
+      <b>Task Creation & Metadata Entry</b><br/><br/>
+      <img src="screenshots/card-creation-sample.png" alt="Task Creation Modal" width="100%"/>
+    </td>
+    <td width="50%" align="center">
+      <b>Status Updates & Column Moves</b><br/><br/>
+      <img src="screenshots/card-edit-sample.png" alt="Card Status Edit" width="100%"/>
+    </td>
+  </tr>
+</table>
 
-- **PSR-4 Autoloading**: Managed through Composer, mapping the `KanbanDev\` namespace directly to `src/`.
-- **PSR-7 HTTP Abstraction**: Controllers consume `Psr\Http\Message\ServerRequestInterface` and return `Psr\Http\Message\ResponseInterface` using `guzzlehttp/psr7`.
-- **Front Controller & Native Regex Router**: All incoming requests are matched against route patterns (supporting dynamic path parameters like `/api/cards/{id}/status`) without framework dependencies.
-- **Data Transfer Objects (DTOs)**: `KanbanCardDto` and `UserDto` validate incoming payloads and enforce type boundaries before hitting the domain layer.
-- **Domain Enums**: Backed PHP 8.2 enums enforce valid states across the system (`CardStatus`, `Priority`, `IssueType`, `UserRole`).
-- **Repository Pattern**: All database interactions are encapsulated in `UserRepository` and `KanbanCardRepository`, using parameterized PDO statements to prevent SQL injection.
-- **Database Wrapper**: A Singleton wrapper (`Database::getInstance()`) providing a persistent, single PDO connection per request cycle.
-- **Security & Session Handling**:
-   - Password hashing using `password_hash()` (`PASSWORD_DEFAULT`).
-   - Session security configured with `session_regenerate_id(true)`, `HttpOnly`, `SameSite=Strict`, and user-scoped data isolation (`WHERE user_id = :id` on all card operations).
+---
 
-### Frontend Implementation
-- **Zero Framework Overhead**: Built with Vanilla JavaScript using the modern `fetch` API for asynchronous updates without full page reloads.
-- **Responsive Layout**: Designed with CSS Grid and Flexbox, featuring a low-fatigue dark theme with distinct color semantics for task types and priorities.
+## Architecture & Technical Choices
+
+The backend is built without full-stack frameworks (like Laravel or Symfony) to maintain a transparent, decoupled REST architecture.
+
+* **Routing & Front Controller**: Single entry point (`public/index.php`) running a native regex-based router mapping endpoints to controllers.
+* **PSR-7 & PSR-4**: Uses `guzzlehttp/psr7` for HTTP request/response abstractions and Composer PSR-4 autoloading (`KanbanDev\`).
+* **Type Safety**: PHP 8.2 backed Enums (`CardStatus`, `Priority`, `IssueType`) enforce valid states across DTOs, Repositories, and the database layer.
+* **Data Layer**: PDO-backed Repository pattern with strict parameters to prevent SQL injection. Managed via a single-connection Singleton wrapper per request.
+* **Security & Auth**: Native PHP session handling (`HttpOnly`, `SameSite=Strict`, `session_regenerate_id()`), password hashing via `password_hash()`, and strict user-isolated database queries (`WHERE user_id = :id`).
+* **Frontend**: Pure HTML5, CSS Grid/Flexbox, and asynchronous `fetch` calls. No frontend build steps, transpirers, or external JS dependencies.
 
 ---
 
@@ -46,26 +53,26 @@ kanban.dev/
 │   └── 001-schema.sql         # Database schema (tables, foreign keys, indexes)
 ├── public/
 │   ├── css/
-│   │   └── styles.css         # Custom layout & dark mode styles
+│   │   └── styles.css         # Layout & dark mode styles
 │   ├── js/
-│   │   ├── app.js             # Board rendering & async card operations
-│   │   └── login.js           # Auth & toggle logic
-│   ├── .htaccess              # Apache rewrite rules for production
+│   │   ├── app.js             # Board rendering & async fetch operations
+│   │   └── login.js           # Auth handlers
+│   ├── .htaccess              # Apache rewrite rules
 │   ├── index.php              # Front Controller entrypoint
-│   └── router.php             # Router script for PHP built-in CLI server
+│   └── router.php             # Router script for PHP CLI server
 ├── src/
-│   ├── Config/                # Environment variable loader
-│   ├── Controller/            # HTTP handlers (Auth, KanbanCard, Page)
+│   ├── Config/                # Environment loader
+│   ├── Controller/            # HTTP Controllers (Auth, Card, Page)
 │   ├── Database/              # PDO connection singleton
-│   ├── Dto/                   # Data Transfer Objects with validation
-│   ├── Http/                  # Router, Route matcher, SessionManager
+│   ├── Dto/                   # Data Transfer Objects
+│   ├── Http/                  # Router, Route matcher, Session manager
 │   ├── Model/                 # Domain entities & Enums
-│   ├── Repository/            # PDO data persistence
-│   └── Service/               # Business logic & authentication rules
+│   ├── Repository/            # PDO persistence layer
+│   └── Service/               # Business logic
 ├── templates/
-│   ├── index.html             # Kanban board view
-│   └── login.html             # Authentication view
-├── docker-compose.yml         # Container configuration for MariaDB
+│   ├── index.html             # Main Kanban view
+│   └── login.html             # Auth view
+├── docker-compose.yml         # MariaDB container setup
 └── composer.json              # PSR-4 definitions & dependencies
 ```
 
