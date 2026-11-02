@@ -2,7 +2,7 @@
 
 A focused task management board designed specifically for software engineering teams working in Scrum/Agile workflows. Built with modern, strictly-typed PHP (PSR-7), MariaDB, and reactive Vanilla JavaScript.
 
-![Kanban.dev Board Overview](screenshots/board-overview.png)
+![Kanban.dev Board Overview](screenshots/populated-board-overview.png)
 
 ## Background & Motivation
 Generic board tools like Trello work well for general checklists, but lack native concepts essential to software engineering without third-party plugins. Developers typically need immediate visibility into:
