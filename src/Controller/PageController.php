@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace KanbanDev\Controller;
 
 use GuzzleHttp\Psr7\Response;
+use KanbanDev\Http\SessionManager;
 use Psr\Http\Message\ResponseInterface;
-use WPROG2\FinalProject\Http\SessionManager;
 
 final class PageController
 {
