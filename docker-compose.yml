@@ -1,11 +1,11 @@
 services:
   mariadb:
     image: mariadb:10.11
-    container_name: wprog2_container_db
+    container_name: kanban_dev_container_db
     restart: unless-stopped
     environment:
       MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD:?Set MARIADB_ROOT_PASSWORD in .env}
-      MARIADB_DATABASE: wprog2_kanban_db
+      MARIADB_DATABASE: kanban_dev_db
       MARIADB_USER: kanban_admin
       MARIADB_PASSWORD: ${KANBAN_DB_PASSWORD:?Set KANBAN_DB_PASSWORD in .env}
     ports:
