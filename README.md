@@ -77,6 +77,7 @@ kanban.dev/
 - PHP 8.2 or higher
 - Composer
 - Docker & Docker Compose
+- .env config file with configured database credentials [.env.example](.env.example)
 
 ### 1. Clone & Configure
 Clone the repository and set up your local environment file:
