@@ -1,0 +1,18 @@
+services:
+  db:
+    image: mariadb:11.2
+    container_name: kanban_db_prod
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${KANBAN_DB_NAME}
+      MYSQL_USER: ${KANBAN_DB_USER}
+      MYSQL_PASSWORD: ${KANBAN_DB_PASSWORD}
+    ports:
+      - "127.0.0.1:3306:3306"
+    volumes:
+      - db_data_prod:/var/lib/mysql
+      - ./database/001-schema.sql:/docker-entrypoint-initdb.d/001-schema.sql:ro
+
+volumes:
+  db_data_prod:
