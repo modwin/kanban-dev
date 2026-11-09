@@ -1,4 +1,18 @@
 services:
+  app:
+    build: .
+    container_name: kanban_app_prod
+    restart: always
+    ports:
+      - "127.0.0.1:8000:80"
+    environment:
+      - KANBAN_DB_HOST=db
+      - KANBAN_DB_NAME=${KANBAN_DB_NAME}
+      - KANBAN_DB_USER=${KANBAN_DB_USER}
+      - KANBAN_DB_PASSWORD=${KANBAN_DB_PASSWORD}
+    depends_on:
+      - db
+
   db:
     image: mariadb:11.2
     container_name: kanban_db_prod
@@ -8,8 +22,6 @@ services:
       MYSQL_DATABASE: ${KANBAN_DB_NAME}
       MYSQL_USER: ${KANBAN_DB_USER}
       MYSQL_PASSWORD: ${KANBAN_DB_PASSWORD}
-    ports:
-      - "127.0.0.1:3306:3306"
     volumes:
       - db_data_prod:/var/lib/mysql
       - ./database/001-schema.sql:/docker-entrypoint-initdb.d/001-schema.sql:ro
