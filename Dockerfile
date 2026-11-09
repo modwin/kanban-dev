@@ -16,3 +16,7 @@ RUN sed -ri -e 's!/var/www/!/var/www/html/public!g' /etc/apache2/apache2.conf /e
 
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html
+
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+RUN composer install --no-dev --optimize-autoloader
