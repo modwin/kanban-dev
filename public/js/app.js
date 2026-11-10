@@ -92,7 +92,7 @@ async function showAuthenticatedUser() {
     const json = await response.json();
     const heading = document.querySelector('header h1');
     if (json.data?.username) {
-        heading.textContent = `⚡ DevKanban — ${json.data.username}`;
+        heading.textContent = `⚡ KanbanDev — ${json.data.username}`;
     }
 }
 
