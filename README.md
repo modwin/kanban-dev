@@ -77,7 +77,12 @@ kanban.dev/
 ```
 
 ---
-
+## Coming future features
+* **OAuth2 & JWT account creation/signin**
+* **Kanban projects**
+* **User-associated savable collections of kanban-boards**
+* **Shared boards to collaborade among users**
+* **Improved mobile interface**
 ## Getting Started
 
 ### Prerequisites
