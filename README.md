@@ -1,4 +1,5 @@
-# Kanban.dev
+# Kanban.dev [<img align="right" src="https://img.shields.io/badge/Live_Demo-kanbandev.app-2ea44f?style=for-the-badge" alt="kanbandev.app">](https://kanbandev.app)
+
 
 A task management web application designed for software engineering workflows. Built from scratch with PHP 8.2 (PSR-7), MariaDB, and Vanilla JavaScript.
 
