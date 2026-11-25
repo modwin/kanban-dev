@@ -5,12 +5,16 @@ const errorEl = document.getElementById('auth-error');
 const toggleBtn = document.getElementById('toggle-mode');
 const submitBtn = document.getElementById('submit-btn');
 const titleEl = document.getElementById('auth-title');
+const repeatGroup = document.getElementById('repeat-group');
+const repeatInput = document.getElementById('password-repeat');
 
 toggleBtn.addEventListener('click', () => {
     mode = mode === 'login' ? 'register' : 'login';
     titleEl.textContent = mode === 'login' ? 'Sign in' : 'Create account';
     submitBtn.textContent = mode === 'login' ? 'Sign in' : 'Register';
     toggleBtn.textContent = mode === 'login' ? 'Create account' : 'Back to sign in';
+    repeatGroup.hidden = mode === 'login';
+    repeatInput.required = mode === 'register';
     errorEl.hidden = true;
 });
 
@@ -22,6 +26,12 @@ form.addEventListener('submit', async (e) => {
         username: document.getElementById('username').value.trim(),
         password: document.getElementById('password').value,
     };
+
+    if (mode === 'register' && payload.password !== repeatInput.value) {
+        errorEl.textContent = 'Passwords do not match';
+        errorEl.hidden = false;
+        return;
+    }
 
     const res = await fetch(`/api/auth/${mode}`, {
         method: 'POST',
